@@ -1,0 +1,538 @@
+<title>Six More Weeks</title>
+<meta name="description" content="Every Groundhog Day forecast on record, graded against the six weeks that followed at the nearest NOAA weather station.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#E7ECEF; --panel:#F6F8F9; --sunk:#DCE3E7;
+  --ink:#1E1B18; --ink2:#4E4A45; --ink3:#7D7872; --rule:#C9D1D6; --rule2:#DAE0E4;
+  --winter:#46558A; --spring:#57843A; --sun:#C08A2E; --sunwash:rgba(192,138,46,.16);
+  --wrong:#A5503A;
+  --sky0:#9FB2C6; --sky1:#E9CFA6; --hill:#5B6150; --hill2:#3E4238; --shadow:rgba(30,27,24,.45);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --ground:#12151A; --panel:#1A1E25; --sunk:#0D1014;
+  --ink:#E9E6E0; --ink2:#AEA99F; --ink3:#7B776F; --rule:#2D333C; --rule2:#232830;
+  --winter:#8E9DDA; --spring:#8FBE6E; --sun:#E0AE55; --sunwash:rgba(224,174,85,.14);
+  --wrong:#DB8A72;
+  --sky0:#1B2233; --sky1:#6E5A4C; --hill:#2A2E28; --hill2:#1A1D19; --shadow:rgba(0,0,0,.55);
+}}
+:root[data-theme="dark"]{
+  --ground:#12151A; --panel:#1A1E25; --sunk:#0D1014;
+  --ink:#E9E6E0; --ink2:#AEA99F; --ink3:#7B776F; --rule:#2D333C; --rule2:#232830;
+  --winter:#8E9DDA; --spring:#8FBE6E; --sun:#E0AE55; --sunwash:rgba(224,174,85,.14);
+  --wrong:#DB8A72;
+  --sky0:#1B2233; --sky1:#6E5A4C; --hill:#2A2E28; --hill2:#1A1D19; --shadow:rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{background:var(--ground)}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 16px/1.62 "Instrument Sans",-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:0 96px}
+h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
+.disp{font-family:Gloock,"Iowan Old Style",Georgia,serif;letter-spacing:-.01em}
+.mono,.num{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.num{font-variant-numeric:tabular-nums}
+.eyebrow{font:500 11.5px/1.2 "IBM Plex Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+a{color:var(--winter)}
+:focus-visible{outline:2px solid var(--sun);outline-offset:2px}
+p{margin:0}
+.w{color:var(--winter)} .s{color:var(--spring)} .g{color:var(--sun)}
+
+/* hero */
+.hero{display:grid;gap:28px;padding-top:36px;align-items:end}
+@media(min-width:900px){.hero{grid-template-columns:minmax(0,1fr) minmax(0,1.08fr)}}
+.hero h1{font-size:clamp(58px,9.5vw,118px);line-height:.9;margin-top:14px}
+.hero h1 i{font-style:normal;color:var(--winter)}
+.dek{font-size:18.5px;line-height:1.55;color:var(--ink2);max-width:40ch;margin-top:22px}
+.dek b{color:var(--ink);font-weight:600}
+.scene{position:relative;border-radius:4px;overflow:hidden;border:1px solid var(--rule);background:var(--sky0)}
+.scene canvas{display:block;width:100%;height:clamp(230px,34vw,380px)}
+.scene figcaption{position:absolute;left:14px;bottom:10px;right:14px;font:500 11px/1.3 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.78);text-shadow:0 1px 2px rgba(0,0,0,.35)}
+figure{margin:0}
+
+.verdict{margin-top:44px;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:860px){.verdict{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.verdict>div{padding:18px 18px 20px 0}
+.verdict>div+div{padding-left:18px;border-left:1px solid var(--rule2)}
+@media(max-width:859px){.verdict>div:nth-child(3){padding-left:0;border-left:0}.verdict>div:nth-child(n+3){border-top:1px solid var(--rule2)}}
+.verdict .v{font-family:Gloock,Georgia,serif;font-size:clamp(34px,4.4vw,50px);line-height:1}
+.verdict .k{font-size:13.5px;color:var(--ink2);margin-top:8px;line-height:1.45;max-width:30ch}
+
+/* sections */
+section{margin-top:78px}
+.head{display:grid;gap:14px;max-width:760px}
+.head h2{font-family:Gloock,Georgia,serif;font-size:clamp(32px,4.2vw,48px);line-height:1.02}
+.head p{color:var(--ink2);font-size:17px;max-width:64ch}
+.head p b{color:var(--ink);font-weight:600}
+.pair{display:grid;gap:34px;margin-top:28px}
+@media(min-width:940px){.pair{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:start}}
+.prose{display:grid;gap:14px;color:var(--ink2);max-width:62ch}
+.prose b{color:var(--ink);font-weight:600}
+.chart{background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:16px 16px 10px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .cap{font-size:13px;color:var(--ink3);margin-top:6px;line-height:1.45}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink2);margin-bottom:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:14px;height:3px;border-radius:2px;display:inline-block}
+
+/* scoreboard */
+.controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin-top:26px;padding:14px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ctl>.eyebrow{margin-right:2px}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:3px;overflow:hidden;background:var(--panel)}
+.seg button{border:0;background:transparent;color:var(--ink2);font:500 13px/1 "Instrument Sans",sans-serif;padding:8px 11px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+.chip{border:1px solid var(--rule);background:var(--panel);color:var(--ink2);border-radius:99px;padding:5px 11px;font:500 12.5px/1 "Instrument Sans",sans-serif;cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+input[type=search]{font:inherit;font-size:14px;padding:7px 10px;border:1px solid var(--rule);border-radius:3px;background:var(--panel);color:var(--ink);width:min(220px,100%)}
+.board{margin-top:4px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:6px 14px;align-items:center;padding:9px 0;border-bottom:1px solid var(--rule2)}
+@media(min-width:760px){.row{grid-template-columns:minmax(210px,300px) 52px minmax(0,1fr)}}
+.row .who{min-width:0;display:flex;flex-direction:column;cursor:pointer;background:none;border:0;padding:0;text-align:left;color:inherit;font:inherit}
+.row .nm{font-weight:600;font-size:15px;line-height:1.25}
+.row .pl{font-size:12.5px;color:var(--ink3);line-height:1.3}
+.row .kind{font:500 10px/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border:1px solid var(--rule);border-radius:2px;padding:2px 4px;margin-left:6px;vertical-align:2px;white-space:nowrap}
+.row .n{font:400 12.5px/1 "IBM Plex Mono",monospace;color:var(--ink3);text-align:right}
+.row .bar{grid-column:1 / -1;height:26px;position:relative}
+@media(min-width:760px){.row .bar{grid-column:auto}}
+.row svg{width:100%;height:26px;display:block}
+.row.ghost .nm{font-weight:500;font-style:italic;color:var(--ink2)}
+.row.ghost{background:repeating-linear-gradient(135deg,transparent 0 6px,var(--sunwash) 6px 7px)}
+.row.open{border-bottom-color:transparent}
+.axisrow{border-bottom:1px solid var(--rule)}
+.axisrow .who{cursor:default}
+.detail{padding:6px 0 22px;border-bottom:1px solid var(--rule2)}
+.detail .about{color:var(--ink2);font-size:14.5px;max-width:78ch}
+.detail .stn{font-size:12.5px;color:var(--ink3);margin-top:6px}
+.strip{margin-top:12px;overflow-x:auto}
+.more{margin-top:14px;background:none;border:1px solid var(--rule);color:var(--ink2);border-radius:3px;padding:8px 14px;font:500 13px/1 "Instrument Sans",sans-serif;cursor:pointer}
+.empty{padding:18px 0;color:var(--ink3)}
+
+.methods{display:grid;gap:22px;margin-top:26px}
+@media(min-width:900px){.methods{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 48px}}
+.methods h3{font:600 15px/1.3 "Instrument Sans",sans-serif;margin-bottom:6px}
+.methods p{color:var(--ink2);font-size:15px}
+footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink3);display:grid;gap:6px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Groundhog Day, graded · every forecast on record</div>
+      <h1 class="disp">Six More <i>Weeks</i></h1>
+      <p class="dek" id="dek"></p>
+    </div>
+    <figure class="scene">
+      <canvas id="scene" aria-label="A groundhog at its burrow at dawn, casting a long shadow whenever the sun is out"></canvas>
+      <figcaption id="sceneCap">Feb 2, 07:25 local · shadow when the sun is out</figcaption>
+    </figure>
+  </header>
+
+  <div class="verdict" id="verdict"></div>
+
+  <section id="board-sec">
+    <div class="head">
+      <div class="eyebrow">The scoreboard</div>
+      <h2>Every prognosticator, against a coin</h2>
+      <p id="boardLede"></p>
+    </div>
+    <div class="controls">
+      <div class="ctl"><span class="eyebrow">Normal</span>
+        <div class="seg" id="baseSeg" role="group" aria-label="Which normal decides an early spring">
+          <button data-b="trailing" aria-pressed="true">30 years before</button><button data-b="fixed" aria-pressed="false">1991–2020</button>
+        </div></div>
+      <div class="ctl" id="kinds"><span class="eyebrow">Who</span></div>
+      <div class="ctl"><span class="eyebrow">Sort</span>
+        <div class="seg" id="sortSeg" role="group" aria-label="Sort">
+          <button data-s="acc" aria-pressed="true">Score</button><button data-s="n" aria-pressed="false">Forecasts</button><button data-s="name" aria-pressed="false">Name</button>
+        </div></div>
+      <div class="ctl"><label class="chip" for="minn" style="display:inline-flex;gap:6px;align-items:center"><input type="checkbox" id="minn" checked> 10+ graded years</label></div>
+      <div class="ctl"><label class="eyebrow" for="q">Find</label><input id="q" type="search" placeholder="Phil, Ohio, armadillo…"></div>
+    </div>
+    <div class="board" id="board"></div>
+    <button class="more" id="more" hidden></button>
+  </section>
+
+  <section>
+    <div class="head">
+      <div class="eyebrow">The yardstick</div>
+      <h2>The best forecast is to stay in the burrow</h2>
+    </div>
+    <div class="pair">
+      <div class="chart">
+        <div class="legend">
+          <span><i class="sw" style="background:var(--spring)"></i>early spring, vs the 30 years before</span>
+          <span><i class="sw" style="background:var(--sun)"></i>early spring, vs 1991–2020</span>
+          <span><i class="sw" style="background:var(--winter)"></i>shadow seen</span>
+          <span><i class="sw" style="background:var(--ink)"></i>forecasts right</span>
+        </div>
+        <svg id="decades" viewBox="0 0 560 300" role="img" aria-label="Share of early springs and of shadow calls by decade"></svg>
+        <p class="cap">Share of graded forecasts in each decade. Decades with fewer than 20 graded forecasts are left out.</p>
+      </div>
+      <div class="prose" id="yardProse"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head">
+      <div class="eyebrow">The ritual</div>
+      <h2>Does anyone actually look for the shadow?</h2>
+    </div>
+    <div class="pair">
+      <div class="chart">
+        <div class="legend">
+          <span><i class="sw" style="background:var(--sun)"></i>sun at the burrow</span>
+          <span><i class="sw" style="background:var(--ink3)"></i>overcast</span>
+        </div>
+        <svg id="look" viewBox="0 0 560 260" role="img" aria-label="Share of shadow calls on sunny and overcast mornings, by kind of forecaster"></svg>
+        <p class="cap">"Sun at the burrow" = at least 30 minutes of sunshine between 7 and 9 am local standard time on Feb 2, from ERA5 reanalysis at the forecaster's coordinates. Bars are 95% intervals.</p>
+      </div>
+      <div class="prose" id="lookProse"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head">
+      <div class="eyebrow">The rhyme</div>
+      <h2>If Candlemas be fair and bright, does winter take another flight?</h2>
+    </div>
+    <div class="pair">
+      <div class="chart">
+        <svg id="rhyme" viewBox="0 0 560 210" role="img" aria-label="Six-week temperature departure after sunny and overcast Groundhog Day mornings"></svg>
+        <p class="cap">Mean departure of the six weeks from the 30 years before, °F, at the same station-years as the forecasts. Interval: 95%, resampling whole years, because burrows a few miles apart share one year's weather.</p>
+      </div>
+      <div class="prose" id="rhymeProse"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head">
+      <div class="eyebrow">How this was scored</div>
+      <h2>Methods, and where not to push them</h2>
+    </div>
+    <div class="methods" id="methods"></div>
+  </section>
+
+  <footer>
+    <div>Forecasts: <a href="https://groundhog-day.com">groundhog-day.com</a> and the sources it cites for each animal. Temperatures: NOAA NCEI GHCN-Daily. Morning sky: ERA5 reanalysis via <a href="https://open-meteo.com">Open-Meteo</a> (CC BY 4.0).</div>
+    <div id="built"></div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const DATA = __DATA__;
+const $ = s => document.querySelector(s);
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const pct = (x, d = 0) => (100 * x).toFixed(d);
+const fmt = n => n.toLocaleString("en-US");
+const toF = c => c * 9 / 5;                       // a departure, so no +32
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const F = Object.fromEntries(DATA.forecasters.map(f => [f.slug, f]));
+const KINDS = {live:"Groundhogs & marmots", stuffed:"Taxidermied", object:"Plush, statues & lawn ornaments", costume:"People in suits", other:"Other animals"};
+
+const T = DATA.summary.trailing, FX = DATA.summary.fixed;
+const nForecasters = T.board.length;
+const phil = T.board.find(b => b.slug === "punxsutawney-phil");
+const fixedPhil = FX.board.find(b => b.slug === "punxsutawney-phil");
+const typeCount = t => DATA.forecasters.filter(f => f.type === t && T.board.some(b => b.slug === f.slug)).length;
+
+/* ── hero copy ─────────────────────────────────────────────────────────────── */
+const graded = new Set(T.board.map(b => b.slug));
+const count = pred => DATA.forecasters.filter(f => graded.has(f.slug) && pred(f)).length;
+const flamingo = T.board.find(b => b.slug === "featherstone-the-flamingo");
+const never = T.alwaysSpring;
+{
+  const nLive = count(f => f.kind === "live"), nStuffed = count(f => f.kind === "stuffed"), nSuit = count(f => f.kind === "costume");
+  $("#dek").innerHTML = `<b>${fmt(T.N)}</b> Groundhog Day forecasts from <b>${nForecasters}</b> prognosticators: ${nLive} live groundhogs and marmots, ${nStuffed} taxidermied ones, ${nSuit} people in suits, and a lobster, an alligator, a largemouth bass, a golf club cover and a plastic flamingo. Each is graded against the six weeks that followed at the nearest NOAA weather station. They were right <b>${pct(T.acc)}%</b> of the time. Staying in the burrow and calling early spring every year would have been right <b>${pct(never)}%</b>.`;
+  const v = [
+    [pct(T.acc) + "%", `of ${fmt(T.N)} forecasts came true, against the normal of the 30 years before each one`],
+    [pct(never) + "%", `for a forecaster who never sees its shadow. Spring beats its trailing normal most years now`],
+    [phil ? `${phil.k}/${phil.n}` : "–", phil ? `Punxsutawney Phil. He calls winter ${pct(phil.shadows / phil.n)}% of the time and is right ${pct(phil.acc)}%` : ""],
+    [flamingo ? `${flamingo.k}/${flamingo.n}` : "–", flamingo ? `Featherstone the Flamingo, a plastic lawn ornament in Massachusetts. Has never seen its shadow` : ""],
+  ];
+  $("#verdict").innerHTML = v.map(([a, b]) => `<div><div class="v num">${a}</div><div class="k">${b}</div></div>`).join("");
+  $("#built").textContent = `Built ${DATA.built}. Forecasts through Groundhog Day 2026, whose six weeks ended March 16.`;
+}
+
+/* ── hero scene ────────────────────────────────────────────────────────────── */
+const scene = $("#scene"), sg = scene.getContext("2d");
+function drawScene(t){
+  const dpr = Math.min(devicePixelRatio || 1, 2), w = scene.clientWidth, h = scene.clientHeight;
+  if (scene.width !== Math.round(w * dpr)){ scene.width = Math.round(w * dpr); scene.height = Math.round(h * dpr); }
+  sg.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const sky = sg.createLinearGradient(0, 0, 0, h);
+  sky.addColorStop(0, css("--sky0")); sky.addColorStop(1, css("--sky1"));
+  sg.fillStyle = sky; sg.fillRect(0, 0, w, h);
+  const hz = h * 0.70;
+  // the sun sits low and a little to the left, like 7:25 on a February morning
+  const sx = w * 0.17, sy = hz - h * 0.16;
+  // a cloud bank drifts across it and back; the shadow follows the sun, not the calendar
+  const phase = REDUCED ? 0.5 : (t / 16000) % 1;
+  const cloudX = w * (-0.45 + 1.9 * phase);
+  const cover = Math.max(0, 1 - Math.abs(cloudX + w * 0.2 - sx) / (w * 0.16));
+  const sunGlow = sg.createRadialGradient(sx, sy, 0, sx, sy, h * 0.42);
+  sunGlow.addColorStop(0, `rgba(255,226,160,${0.75 * (1 - cover * 0.85)})`); sunGlow.addColorStop(1, "rgba(255,226,160,0)");
+  sg.fillStyle = sunGlow; sg.fillRect(0, 0, w, h);
+  sg.fillStyle = css("--sun"); sg.beginPath(); sg.arc(sx, sy, Math.max(10, h * 0.045), 0, 7); sg.fill();
+  // clouds
+  sg.fillStyle = `rgba(214,220,228,.92)`;
+  for (let i = 0; i < 5; i++){
+    const cx = cloudX + i * w * 0.085, cy = sy - h * 0.02 + Math.sin(i * 1.7) * h * 0.035, r = h * (0.07 + (i % 2) * 0.03);
+    sg.beginPath(); sg.ellipse(cx, cy, r * 1.6, r * 0.7, 0, 0, 7); sg.fill();
+  }
+  // far hills
+  sg.fillStyle = css("--hill2");
+  sg.beginPath(); sg.moveTo(0, hz - h * 0.05);
+  for (let x = 0; x <= w; x += 12) sg.lineTo(x, hz - h * 0.05 - Math.sin(x / w * 5.1 + 1) * h * 0.035 - Math.sin(x / w * 13) * h * 0.01);
+  sg.lineTo(w, h); sg.lineTo(0, h); sg.fill();
+  sg.fillStyle = css("--hill"); sg.fillRect(0, hz, w, h - hz);
+  // snow patches: it is February
+  sg.fillStyle = "rgba(240,244,246,.55)";
+  for (let i = 0; i < 9; i++){ const x = ((i * 0.137 + 0.05) % 1) * w, y = hz + h * (0.05 + ((i * 0.31) % 1) * 0.2); sg.beginPath(); sg.ellipse(x, y, w * 0.05, h * 0.012, 0, 0, 7); sg.fill(); }
+  // burrow mound
+  const bx = w * 0.58, by = hz + h * 0.14;
+  sg.fillStyle = css("--hill2"); sg.beginPath(); sg.ellipse(bx, by + h * 0.02, w * 0.12, h * 0.05, 0, Math.PI, 0); sg.fill();
+  sg.fillStyle = "#15120F"; sg.beginPath(); sg.ellipse(bx, by + h * 0.015, w * 0.04, h * 0.018, 0, 0, 7); sg.fill();
+  // the shadow: long and to the right when the sun is out, gone when it is not
+  const s = Math.max(0, 1 - cover * 1.3);
+  const u = h * 0.19;   // groundhog height
+  if (s > 0.02){
+    sg.save(); sg.globalAlpha = s;
+    sg.fillStyle = css("--shadow");
+    sg.beginPath();
+    sg.moveTo(bx - u * 0.18, by);
+    sg.quadraticCurveTo(bx + u * 1.1, by + u * 0.05, bx + u * 2.9, by + u * 0.02);
+    sg.quadraticCurveTo(bx + u * 3.25, by - u * 0.06, bx + u * 3.0, by - u * 0.13);
+    sg.quadraticCurveTo(bx + u * 1.6, by - u * 0.2, bx + u * 0.2, by - u * 0.05);
+    sg.closePath(); sg.fill(); sg.restore();
+  }
+  // the groundhog, sitting up
+  const bob = REDUCED ? 0 : Math.sin(t / 900) * u * 0.012;
+  sg.fillStyle = "#3A2A1C";
+  sg.beginPath(); sg.ellipse(bx, by - u * 0.36 + bob, u * 0.2, u * 0.37, 0, 0, 7); sg.fill();
+  sg.beginPath(); sg.ellipse(bx + u * 0.02, by - u * 0.8 + bob, u * 0.13, u * 0.12, 0, 0, 7); sg.fill();
+  sg.beginPath(); sg.arc(bx - u * 0.08, by - u * 0.9 + bob, u * 0.035, 0, 7); sg.arc(bx + u * 0.11, by - u * 0.9 + bob, u * 0.035, 0, 7); sg.fill();
+  sg.fillStyle = "#6B5038"; sg.beginPath(); sg.ellipse(bx + u * 0.02, by - u * 0.33 + bob, u * 0.11, u * 0.24, 0, 0, 7); sg.fill();
+  sg.fillStyle = "#0E0B08"; sg.beginPath(); sg.arc(bx - u * 0.035, by - u * 0.83 + bob, u * 0.016, 0, 7); sg.arc(bx + u * 0.075, by - u * 0.83 + bob, u * 0.016, 0, 7); sg.fill();
+  // a top hat, because the Inner Circle wears them
+  sg.fillStyle = "#15120F";
+  const hx = bx - u * 0.42, hy = by - u * 0.12;
+  sg.fillRect(hx - u * 0.12, hy - u * 0.22, u * 0.24, u * 0.22); sg.fillRect(hx - u * 0.18, hy, u * 0.36, u * 0.04);
+  $("#sceneCap").textContent = s > 0.5 ? "Feb 2, 07:25 · sun out · shadow · six more weeks of winter" : "Feb 2, 07:25 · overcast · no shadow · early spring";
+}
+let raf = 0;
+function loop(t){ drawScene(t); if (!REDUCED) raf = requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+addEventListener("resize", () => { if (REDUCED) drawScene(0); });
+
+/* ── scoreboard ────────────────────────────────────────────────────────────── */
+const state = { base: "trailing", sort: "acc", kinds: new Set(Object.keys(KINDS)), q: "", open: new Set(["punxsutawney-phil"]), limit: 30, minN: 10 };
+{
+  const present = new Set(T.board.map(b => F[b.slug].kind));
+  const box = $("#kinds");
+  for (const [k, label] of Object.entries(KINDS)) if (present.has(k)){
+    const b = document.createElement("button");
+    b.className = "chip"; b.id = "kind-" + k; b.dataset.k = k; b.setAttribute("aria-pressed", "true");
+    b.textContent = label;
+    b.onclick = () => { state.kinds.has(k) ? state.kinds.delete(k) : state.kinds.add(k); b.setAttribute("aria-pressed", state.kinds.has(k)); renderBoard(); };
+    box.appendChild(b);
+  }
+}
+for (const b of $("#baseSeg").children) b.onclick = () => { state.base = b.dataset.b; [...$("#baseSeg").children].forEach(x => x.setAttribute("aria-pressed", x === b)); renderBoard(); };
+for (const b of $("#sortSeg").children) b.onclick = () => { state.sort = b.dataset.s; [...$("#sortSeg").children].forEach(x => x.setAttribute("aria-pressed", x === b)); renderBoard(); };
+$("#q").oninput = e => { state.q = e.target.value.trim().toLowerCase(); renderBoard(); };
+$("#minn").onchange = e => { state.minN = e.target.checked ? 10 : 1; renderBoard(); };
+$("#more").onclick = () => { state.limit = 1e9; renderBoard(); };
+
+function barSVG(lo, hi, acc, cls, coins, chance){
+  // one scale for every row: 0-100%, the coin at 50, the luckiest-coin band in gold
+  const X = v => (v * 100).toFixed(2) + "%";
+  let s = `<svg preserveAspectRatio="none" aria-hidden="true">`;
+  if (coins) s += `<rect x="${X(coins[0])}" y="0" width="${X(coins[2] - coins[0])}" height="26" fill="var(--sunwash)"/>`;
+  s += `<line x1="50%" x2="50%" y1="0" y2="26" stroke="var(--ink3)" stroke-dasharray="2 3"/>`;
+  if (chance != null) s += `<line x1="${X(chance)}" x2="${X(chance)}" y1="5" y2="21" stroke="var(--ink)" stroke-width="2"/>`;
+  if (hi != null) s += `<line x1="${X(lo)}" x2="${X(hi)}" y1="13" y2="13" stroke="${cls}" stroke-width="2" stroke-opacity=".45"/>`;
+  s += `</svg><svg style="position:absolute;inset:0" aria-hidden="true"><circle cx="${X(acc)}" cy="13" r="5.5" fill="${cls}"/></svg>`;
+  return s;
+}
+function axisRow(coins){
+  const ticks = [0, .25, .5, .75, 1].map(v => `<text x="${v * 100}%" y="17" text-anchor="${v === 0 ? "start" : v === 1 ? "end" : "middle"}" fill="var(--ink3)" font-size="11" font-family="IBM Plex Mono, monospace">${v * 100}%</text>`).join("");
+  return `<div class="row axisrow"><div class="who"><span class="eyebrow">Forecaster</span></div><div class="n eyebrow">graded</div>
+    <div class="bar"><svg aria-hidden="true">${ticks}</svg></div></div>`;
+}
+function stripSVG(f, base){
+  const key = base === "trailing" ? "nt" : "nf";
+  const ys = f.years.filter(r => "t" in r && key in r);
+  if (!ys.length) return `<p class="empty">No year this station can grade.</p>`;
+  const cw = 15, W = Math.max(ys.length * cw + 40, 300), H = 150, mid = 76;
+  const maxA = Math.max(3, ...ys.map(r => Math.abs(toF(r.t - r[key]))));
+  const sc = 56 / maxA;
+  let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Year by year: shadow call, temperature departure, and whether the call was right">`;
+  s += `<line x1="30" x2="${W - 6}" y1="${mid}" y2="${mid}" stroke="var(--rule)"/>`;
+  s += `<text x="0" y="${mid - 44}" font-size="10" fill="var(--ink3)" font-family="IBM Plex Mono, monospace">warm</text><text x="0" y="${mid + 52}" font-size="10" fill="var(--ink3)" font-family="IBM Plex Mono, monospace">cold</text>`;
+  ys.forEach((r, i) => {
+    const a = toF(r.t - r[key]), x = 34 + i * cw, early = r.t > r[key], right = (r.s === 1) !== early;
+    const hgt = Math.max(1.5, Math.abs(a) * sc);
+    s += `<rect x="${x}" y="${a > 0 ? mid - hgt : mid}" width="${cw - 5}" height="${hgt}" fill="${r.s ? "var(--winter)" : "var(--spring)"}" opacity="${right ? 1 : .38}"><title>${r.y}: ${r.s ? "saw shadow (winter)" : "no shadow (spring)"} · six weeks ${a >= 0 ? "+" : ""}${a.toFixed(1)}°F vs normal · ${right ? "right" : "wrong"}</title></rect>`;
+    if (!right) s += `<text x="${x + (cw - 5) / 2}" y="${a > 0 ? mid + 12 : mid - 5}" text-anchor="middle" font-size="10" fill="var(--wrong)" font-family="IBM Plex Mono, monospace">×</text>`;
+    if (r.y % 10 === 0 || i === 0 || i === ys.length - 1) s += `<text x="${x + (cw - 5) / 2}" y="${H - 4}" text-anchor="middle" font-size="10" fill="var(--ink3)" font-family="IBM Plex Mono, monospace">${String(r.y)}</text>`;
+  });
+  return s + `</svg>`;
+}
+function renderBoard(){
+  const S = DATA.summary[state.base];
+  const coins = S.coins.best;
+  let rows = S.board.filter(b => state.kinds.has(F[b.slug].kind) && b.n >= state.minN);
+  if (state.q) rows = rows.filter(b => { const f = F[b.slug]; return (f.name + " " + f.city + " " + f.region + " " + f.type).toLowerCase().includes(state.q); });
+  rows.sort(state.sort === "acc" ? (a, b) => b.acc - a.acc || b.n - a.n : state.sort === "n" ? (a, b) => b.n - a.n : (a, b) => F[a.slug].name.localeCompare(F[b.slug].name));
+  let html = axisRow();
+  const ghost = (name, place, acc) => `<div class="row ghost"><div class="who" style="cursor:default"><span class="nm">${name}</span><span class="pl">${place}</span></div><div class="n">${fmt(S.N)}</div><div class="bar">${barSVG(null, null, acc, "var(--sun)", null)}</div></div>`;
+  if (!state.q){
+    html += ghost("Never sees its shadow", "a control: calls early spring every year, everywhere", S.alwaysSpring);
+    html += ghost("Always sees its shadow", "a control: calls six more weeks every year, everywhere", S.alwaysWinter);
+  }
+  const shown = rows.slice(0, state.limit);
+  for (const b of shown){
+    const f = F[b.slug], open = state.open.has(b.slug);
+    const color = b.shadows / b.n >= 0.5 ? "var(--winter)" : "var(--spring)";
+    html += `<div class="row${open ? " open" : ""}">
+      <button class="who" id="who-${b.slug}" data-slug="${b.slug}" aria-expanded="${open}"><span class="nm">${esc(f.name)}<span class="kind">${esc(f.type)}</span></span><span class="pl">${esc(f.city)}, ${esc(f.region)} · ${pct(b.acc)}% right · chance ${pct(b.chance)}%</span></button>
+      <div class="n" title="${b.k} right of ${b.n} graded">${b.k}/${b.n}</div>
+      <div class="bar" title="${pct(b.acc)}% right; ${pct(b.chance)}% expected by chance at its own call rate">${barSVG(b.lo, b.hi, b.acc, color, coins, b.chance)}</div></div>`;
+    if (open){
+      const st = f.station;
+      html += `<div class="detail"><p class="about">${esc(f.desc || "")}</p>
+        <p class="stn mono">Graded at GHCN ${st.station} ${esc(st.name)}, ${st.km} km away · ${b.early} of ${b.n} graded years were early springs · p = ${b.p < 0.001 ? "<0.001" : b.p.toFixed(2)} against a coin</p>
+        <div class="strip">${stripSVG(f, state.base)}</div>
+        <p class="stn">Bars: how far the six weeks after Feb 2 ran from normal. <span class="w">Indigo</span> = saw its shadow, <span class="s">green</span> = didn't. Faded with × = wrong.</p></div>`;
+    }
+  }
+  if (!rows.length) html += `<p class="empty">No forecaster matches. Clear the search or turn a group back on.</p>`;
+  $("#board").innerHTML = html;
+  $("#more").hidden = rows.length <= state.limit;
+  $("#more").textContent = `Show all ${rows.length}`;
+  for (const w of document.querySelectorAll(".who[data-slug]")) w.onclick = () => {
+    const s = w.dataset.slug; state.open.has(s) ? state.open.delete(s) : state.open.add(s); renderBoard();
+    const again = document.getElementById("who-" + s); if (again) again.focus();
+  };
+  const top = S.board.find(b => b.slug === S.coins.top), tf = F[top.slug];
+  $("#boardLede").innerHTML = `Each dot is the share of a forecaster's calls that came true, with its 95% interval: <span class="w">indigo</span> if it mostly sees its shadow, <span class="s">green</span> if it mostly doesn't. The dashed line is a fair coin. The gold band is where <b>the best of ${S.coins.eligibleN} coins</b> lands in 90% of replays when each coin is tossed as often as its forecaster forecast. That band is a leaderboard of pure luck. The black tick is a fairer control: the score each forecaster would get by calling winter <i>at its own rate</i>, at random.<br><br>Against coins, the top of the table looks like skill. ${esc(tf.name)}, ${esc(tf.type.toLowerCase())}, of ${esc(tf.city)}, ${esc(tf.region)}, is right ${top.k} times in ${top.n}, and the best coin does that well only ${pct(S.coins.pBestAtLeastTop, 1)}% of the time. But ${esc(tf.shortname || tf.short || tf.name)} sees a shadow in ${pct(top.shadows / top.n)}% of years, in a place where spring came early in ${pct(top.spring)}% of them. Calling at that rate at random scores <b>${pct(top.chance)}%</b>. Click any name for its year-by-year record.`;
+}
+renderBoard();
+
+/* ── small svg helpers ─────────────────────────────────────────────────────── */
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs, parent, text){ const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; }
+const TXT = {fill:"var(--ink3)", "font-size":"11", "font-family":"IBM Plex Mono, monospace"};
+
+/* ── decades ───────────────────────────────────────────────────────────────── */
+{
+  const svg = $("#decades"), L = 44, R = 548, TOP = 14, B = 262;
+  const decs = Object.keys(T.byDecade).filter(d => T.byDecade[d].n >= 20).map(Number);
+  const X = d => L + (d - decs[0]) / Math.max(10, decs[decs.length - 1] - decs[0]) * (R - L);
+  const Y = v => B - v * (B - TOP);
+  for (const v of [0, .25, .5, .75, 1]){
+    el("line", {x1:L, x2:R, y1:Y(v), y2:Y(v), stroke:"var(--rule2)", "stroke-dasharray": v === .5 ? "3 3" : "", }, svg);
+    el("text", {...TXT, x:L - 8, y:Y(v) + 4, "text-anchor":"end"}, svg, (v * 100) + "%");
+  }
+  for (const d of decs) el("text", {...TXT, x:X(d), y:B + 20, "text-anchor":"middle"}, svg, d + "s");
+  const series = [
+    [d => T.byDecade[d].early, "var(--spring)"],
+    [d => (FX.byDecade[d] || {}).early, "var(--sun)"],
+    [d => T.byDecade[d].shadow, "var(--winter)"],
+    [d => T.byDecade[d].acc, "var(--ink)"],
+  ];
+  for (const [f, c] of series){
+    const pts = decs.filter(d => f(d) != null).map(d => [X(d), Y(f(d))]);
+    el("polyline", {points: pts.map(p => p.join(",")).join(" "), fill:"none", stroke:c, "stroke-width":2.4, "stroke-linejoin":"round"}, svg);
+    pts.forEach(p => el("circle", {cx:p[0], cy:p[1], r:3.4, fill:c}, svg));
+  }
+  const dd = k => T.byDecade[k] || {};
+  const last = decs[decs.length - 1];
+  $("#yardProse").innerHTML = `
+    <p>Here an early spring means six weeks warmer than the thirty years before them. That is what "normal" meant to anyone standing at the burrow that morning, and it sounds like it should be a coin toss. It isn't. The climate is warming faster than a thirty-year average can catch up, so a spring beats its own trailing normal <b>${pct(T.earlyShare)}%</b> of the time across every graded forecast, and <b>${pct(dd(last).early)}%</b> of the time in the ${last}s.</p>
+    <p>The winning strategy is to call spring every year. A forecaster who did would be right ${pct(never)}% of the time. The prognosticators call winter <b>${pct(T.shadowShare)}%</b> of the time, which pulls them back toward a coin: ${pct(T.acc)}% right, against ${pct(T.chance)}% if every one of them had called at its own rate at random. Their entire edge over chance is about ${Math.round((T.acc - T.chance) * T.N)} forecasts out of ${fmt(T.N)}.</p>
+    <p>The early decades are almost all Phil, who saw his shadow nearly every year until the 1970s. Then dozens of other forecasters joined and the shadow rate fell to about half. Switch to the fixed 1991–2020 normal and the gold line shows the same warming from the other side: early springs are rare before 1980 and common after. Against that normal the groundhogs score ${pct(FX.acc)}%.</p>`;
+}
+
+/* ── the ritual ────────────────────────────────────────────────────────────── */
+{
+  const Lk = DATA.mornings.look, svg = $("#look");
+  const groups = ["all", ...Object.keys(KINDS)].filter(k => Lk[k] && Lk[k].sunny.n + Lk[k].dull.n >= 12);
+  const L = 150, R = 540, rowH = (232) / groups.length;
+  const X = v => L + v * (R - L);
+  for (const v of [0, .5, 1]){
+    el("line", {x1:X(v), x2:X(v), y1:4, y2:232, stroke:"var(--rule2)", "stroke-dasharray": v === .5 ? "3 3" : ""}, svg);
+    el("text", {...TXT, x:X(v), y:252, "text-anchor":"middle"}, svg, (v * 100) + "% shadow");
+  }
+  groups.forEach((k, i) => {
+    const y = 4 + rowH * (i + .5);
+    el("text", {x:0, y:y + 4, fill:"var(--ink2)", "font-size":"13", "font-family":"Instrument Sans, sans-serif", "font-weight": k === "all" ? 600 : 400}, svg, k === "all" ? "Everyone" : KINDS[k]);
+    const cells = [["sunny", "var(--sun)", -6], ["dull", "var(--ink3)", 6]];
+    for (const [c, col, dy] of cells){
+      const {shadows, n} = Lk[k][c]; if (!n) continue;
+      const p = shadows / n, z = 1.96, se = z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / (1 + z * z / n), cen = (p + z * z / (2 * n)) / (1 + z * z / n);
+      el("line", {x1:X(Math.max(0, cen - se)), x2:X(Math.min(1, cen + se)), y1:y + dy, y2:y + dy, stroke:col, "stroke-width":2, "stroke-opacity":.5}, svg);
+      const dot = el("circle", {cx:X(p), cy:y + dy, r:5, fill:col}, svg);
+      el("title", {}, dot, `${k === "all" ? "Everyone" : KINDS[k]}, ${c === "sunny" ? "sun at the burrow" : "overcast"}: shadow ${pct(p)}% of ${n}`);
+    }
+  });
+  const a = Lk.all, ps = a.sunny.shadows / a.sunny.n, pd = a.dull.shadows / a.dull.n;
+  const r = k => Lk[k] ? [Lk[k].sunny.shadows / Math.max(1, Lk[k].sunny.n), Lk[k].dull.shadows / Math.max(1, Lk[k].dull.n)] : null;
+  const live = r("live"), st = r("stuffed"), cos = r("costume");
+  $("#lookProse").innerHTML = `
+    <p>The legend is a measurement: the groundhog comes out, and on a sunny morning it casts a shadow. If anyone really looks, shadow calls should pile up on sunny mornings. So every forecast since 1940 was matched to ERA5 reanalysis of the sky over its burrow between 7 and 9 am.</p>
+    <p>Someone is looking. On sunny mornings a shadow was seen <b>${pct(ps)}%</b> of the time (${fmt(a.sunny.n)} forecasts); under cloud, <b>${pct(pd)}%</b> (${fmt(a.dull.n)}). ${live ? `For live groundhogs it is ${pct(live[0])}% against ${pct(live[1])}%.` : ""}</p>
+    <p>It isn't the groundhogs doing the looking. The taxidermied ones, which have not come out of anything in years, respond to the sky ${st ? `even more sharply: shadows ${pct(st[0])}% of the time in sun, ${pct(st[1])}% under cloud` : "just as well"}. ${cos ? `For people in groundhog suits it is ${pct(cos[0])}% against ${pct(cos[1])}%.` : ""} The measurement is real. The handlers take it, and as the rhyme below shows, it measures the wrong thing.</p>`;
+}
+
+/* ── the rhyme ─────────────────────────────────────────────────────────────── */
+{
+  const r = DATA.mornings.rhyme, svg = $("#rhyme");
+  const lim = Math.max(2, Math.ceil(Math.max(Math.abs(toF(r.sunnyMean)), Math.abs(toF(r.dullMean)), ...r.gapCI.map(v => Math.abs(toF(v)))) + 0.5));
+  const L = 150, R = 540, X = v => L + (v + lim) / (2 * lim) * (R - L);
+  for (let v = -lim; v <= lim; v += lim / 2){
+    el("line", {x1:X(v), x2:X(v), y1:6, y2:170, stroke: v === 0 ? "var(--ink3)" : "var(--rule2)", "stroke-dasharray": v === 0 ? "" : "2 3"}, svg);
+    el("text", {...TXT, x:X(v), y:190, "text-anchor":"middle"}, svg, (v > 0 ? "+" : "") + v.toFixed(1) + "°F");
+  }
+  el("text", {...TXT, x:X(-lim), y:206}, svg, "colder six weeks");
+  el("text", {...TXT, x:X(lim), y:206, "text-anchor":"end"}, svg, "warmer six weeks");
+  const rows = [["Sunny Feb 2", toF(r.sunnyMean), "var(--sun)", r.sunnyN], ["Overcast Feb 2", toF(r.dullMean), "var(--ink3)", r.dullN], ["Sunny minus overcast", toF(r.sunnyMean - r.dullMean), "var(--winter)", null]];
+  rows.forEach(([label, v, col, n], i) => {
+    const y = 32 + i * 50;
+    el("text", {x:0, y:y + 4, fill:"var(--ink2)", "font-size":"13", "font-family":"Instrument Sans, sans-serif", "font-weight": i === 2 ? 600 : 400}, svg, label);
+    if (i === 2) el("line", {x1:X(toF(r.gapCI[0])), x2:X(toF(r.gapCI[1])), y1:y, y2:y, stroke:col, "stroke-width":3, "stroke-opacity":.45}, svg);
+    el("circle", {cx:X(v), cy:y, r:6, fill:col}, svg);
+    el("text", {...TXT, x:X(v), y:y - 11, "text-anchor":"middle", fill:"var(--ink2)"}, svg, (v >= 0 ? "+" : "") + v.toFixed(2) + (n ? ` · ${fmt(n)}` : ""));
+  });
+  const gap = toF(r.sunnyMean - r.dullMean), lo = toF(r.gapCI[0]), hi = toF(r.gapCI[1]);
+  $("#rhymeProse").innerHTML = `
+    <p>Set the animals aside. Groundhog Day is a German Candlemas rhyme with a badger swapped for a groundhog, and the rhyme makes a claim of its own: <i>if Candlemas be fair and bright, winter will have another flight.</i> A sunny second of February should come before a cold six weeks.</p>
+    <p>Across ${fmt(r.sunnyN + r.dullN)} burrow-mornings in ${r.years} years, the six weeks after a sunny Groundhog Day ran <b>${gap >= 0 ? "+" : ""}${gap.toFixed(2)}°F</b> relative to those after an overcast one (95% interval ${lo.toFixed(2)} to ${hi >= 0 ? "+" : ""}${hi.toFixed(2)}). ${lo <= 0 && hi >= 0 ? "Zero is inside that interval. One morning's sky says nothing measurable about the next month and a half." : gap < 0 ? "Colder, as the rhyme says, and the interval stays below zero." : "Warmer, the opposite of the rhyme."}</p>
+    <p>That is not a knock on the idea that weather persists. February 2 is a single morning. A clear, cold high-pressure day is often gone by the weekend, and one morning's sky says little about the forty-two days that follow.</p>`;
+}
+
+/* ── methods ───────────────────────────────────────────────────────────────── */
+{
+  const stns = DATA.forecasters.filter(f => f.station);
+  const kms = stns.map(f => f.station.km).sort((a, b) => a - b);
+  const ungraded = DATA.forecasters.reduce((a, f) => a + f.years.length, 0) - T.N;
+  const M = [
+    ["What counts as a forecast", `Every year groundhog-day.com records a shadow call for: ${fmt(DATA.forecasters.reduce((a, f) => a + f.years.length, 0))} calls from ${DATA.forecasters.length} prognosticators, with "no record" years dropped. Some early entries come from newspaper clippings and club histories, and the site notes a few disputes. Punxsutawney Phil's record starts in 1887. ${fmt(ungraded)} calls could not be graded, mostly because the chosen station had no usable six weeks that year or no thirty-year history before it.`],
+    ["What counts as an early spring", `The legend promises six more weeks, so the outcome is exactly those six weeks: February 3 to March 16. Each day's mean is the average of its high and low at the forecaster's nearest long-running GHCN-Daily station (median ${kms[kms.length >> 1]} km away), and a year needs 38 of the 42 days. Early spring means the six-week mean beat normal. A tie goes to winter.`],
+    ["Two normals", `The headline normal is the mean of the thirty six-week windows before the forecast, requiring at least twenty. The alternative is the station's 1991–2020 mean. The yardstick section shows why the choice matters: in a warming record a fixed modern normal marks most old years cold and most recent years warm, whatever the groundhogs do.`],
+    ["The coins", `Each forecaster's graded years are replayed with fair coins, 20,000 times. The gold band is the 5–95% range of the single best coin among the ${T.coins.eligibleN} forecasters with at least ${T.coins.minN} graded years. A leaderboard of ${T.coins.eligibleN} will always have a star, and that band shows how bright a star luck alone produces.`],
+    ["The morning sky", `Sunshine duration and cloud cover from ERA5 reanalysis at each forecaster's coordinates, requested in UTC and converted to local standard time. Open-Meteo's own timezone option labels February hours with the offset in force on the day you ask, which in September moves every morning by an hour. Reanalysis is a model on a roughly 25 km grid, not an observer on Gobbler's Knob, and some ceremonies are held indoors.`],
+    ["Where not to push this", `The trailing normal lags a warming climate, so an early spring is more likely than not, and more likely each decade. That is why every forecaster is compared with chance at its own call rate, not only with a coin. Forecasters near each other share one year's weather, so their scores are not independent draws and the pooled interval is narrower than it should be. Stations are not homogenised, and a moved thermometer can shift a trailing normal. Every forecaster, alive or not, has handlers, so every call measures people. Nothing here can tell a lucky groundhog from a skilled one, and none has a record long enough to try.`],
+  ];
+  $("#methods").innerHTML = M.map(([h, p]) => `<div><h3>${h}</h3><p>${p}</p></div>`).join("");
+}
+
+new MutationObserver(() => { if (REDUCED) drawScene(0); }).observe(document.documentElement, {attributes:true, attributeFilter:["data-theme"]});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { if (REDUCED) drawScene(0); });
+</script>
